@@ -22,6 +22,13 @@ namespace IN_lab1.Controllers
         {
             return View();
         }
+        public IActionResult GetFile()
+        {
+            string file_path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files/hello.txt");
+            string file_type = "text/plain";
+            string file_name = "hello.txt";
+            return PhysicalFile(file_path, file_type, file_name);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
