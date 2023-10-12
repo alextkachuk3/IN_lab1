@@ -15,6 +15,11 @@ namespace IN_lab1.Controllers
 
         public IActionResult Index()
         {
+            if (HttpContext.User!.Identity!.IsAuthenticated)
+            {
+                return LocalRedirect(Url.Action("Index", "Files")!);
+            }
+
             return View();
         }
 

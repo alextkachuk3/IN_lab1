@@ -16,11 +16,6 @@ namespace IN_lab1.Controllers
             _userService = userService;
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
-
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
@@ -28,8 +23,8 @@ namespace IN_lab1.Controllers
 
             if(user == null)
             {
-                ViewBag.AuthError = "User with this username not exists!";
-                return View();
+                TempData["AuthError"] = "User with this username not exists!";
+                return RedirectToAction("Index", "Home");
             }
             else if(user.CheckCredentials(password))
             {
@@ -41,12 +36,12 @@ namespace IN_lab1.Controllers
 
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-                return LocalRedirect("~/");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-                ViewBag.AuthError = "Wrong password!";
-                return View();
+                TempData["AuthError"] = "Wrong password!";
+                return RedirectToAction("Index", "Home");
             }
         }
 
