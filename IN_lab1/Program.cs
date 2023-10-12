@@ -1,4 +1,5 @@
 using IN_lab1.Data;
+using IN_lab1.Services.UploadedFilesService;
 using IN_lab1.Services.UserService;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUploadedFileService, UploadedFileService>();
 
 var app = builder.Build();
 

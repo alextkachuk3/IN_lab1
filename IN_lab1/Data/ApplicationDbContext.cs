@@ -12,6 +12,7 @@ namespace IN_lab1.Data
         { }
 
         public DbSet<User>? Users { get; set; }
+        public DbSet<UploadedFile>? UploadedFiles { get; set; }
 
     }
 }
