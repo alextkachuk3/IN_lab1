@@ -18,9 +18,14 @@ namespace IN_lab1.Services.UploadedFilesService
             throw new NotImplementedException();
         }
 
+        public UploadedFile? GetUploadedFile(Guid id)
+        {
+            return _dbContext.UploadedFiles?.Where(i => i.Id.Equals(id)).FirstOrDefault();
+        }
+
         public List<UploadedFile>? GetUserFiles(User user)
         {
-            return _dbContext.UploadedFiles?.Where(i => i.User == user).ToList();
+            return _dbContext.UploadedFiles?.Where(i => i.User!.Equals(user)).ToList();
         }
 
         public async Task UploadFileAsync(IFormFile file, User user)

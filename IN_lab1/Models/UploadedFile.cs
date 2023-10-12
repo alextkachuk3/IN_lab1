@@ -9,7 +9,7 @@ namespace IN_lab1.Models
 
         public UploadedFile(Guid id, string originalFileName, long fileSize, User user)
         {
-            Id = Id;
+            Id = id;
             OriginalFileName = originalFileName;
             FileSize = fileSize;
             User = user;

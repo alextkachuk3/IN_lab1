@@ -35,13 +35,18 @@ namespace IN_lab1.Controllers
             return View(files);
         }
 
-        public IActionResult GetFile()
+        public IActionResult GetFile(Guid id)
         {
-            string file_name = "testfile.txt";
-            string file_path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files", file_name);
-            string file_type = "application/octet-stream";
+            UploadedFile? file = _uploadedFileService.GetUploadedFile(id);
+            if(file is null)
+            {
+                throw new InvalidOperationException("File with id " + id + "not exists!");
+            }
 
-            return PhysicalFile(file_path, file_type, file_name);
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UploadedFiles", file.Id.ToString());
+            string fileType = "application/octet-stream";
+
+            return PhysicalFile(filePath, fileType, file.OriginalFileName!);
         }
 
         [HttpPost]

@@ -1,9 +1,5 @@
 ﻿@{
     List<UploadedFile>? uploadedFiles = Model;
-    foreach (var a in uploadedFiles)
-    {
-        System.Console.WriteLine(a.OriginalFileName);
-    }
 
     string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB" };
 
@@ -38,13 +34,13 @@
     <hr class="hr my-3" />
 
     @if (uploadedFiles.Count == 0)
-    {        
+    {
         <p>You haven't uploaded any file. It's good opportunity to upload first one :)</p>
     }
     else
     {
         <div class="panel">
-            <table class="table table-striped table-hover" id="Extension1">
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>Filename</th>
@@ -55,7 +51,7 @@
                 <tbody>
                     @foreach (var file in uploadedFiles)
                     {
-                        <tr class="paginate-show"><td><a href="#">@file.OriginalFileName</a></td><td>@file.UploadDate.ToString()</td><td>@ConvertBytesSizeToString(file.FileSize)</td></tr>
+                        <tr class="paginate-show"><td><a asp-controller="Files" asp-action="GetFile" asp-route-id="@file.Id.ToString()">@file.OriginalFileName</a></td><td>@file.UploadDate.ToString()</td><td>@ConvertBytesSizeToString(file.FileSize)</td></tr>
                     }
                 </tbody>
             </table>
