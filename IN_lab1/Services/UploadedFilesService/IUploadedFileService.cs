@@ -11,5 +11,7 @@ namespace IN_lab1.Services.UploadedFilesService
         public void DeleteFile(Guid id);
 
         List<UploadedFile>? GetUserFiles(User user);
+
+        List<UploadedFile>? GetAllFiles();
     }
 }

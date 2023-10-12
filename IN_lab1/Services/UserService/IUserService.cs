@@ -6,7 +6,7 @@ namespace IN_lab1.Services.UserService
     {
         public bool IsUserNameUsed(string username);
 
-        public void AddUser(string username, string password, string firstName, string lastName);
+        public void AddUser(string username, string password);
 
         public User? GetUser(string username);
     }

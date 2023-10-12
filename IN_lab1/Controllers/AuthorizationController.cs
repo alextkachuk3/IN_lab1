@@ -31,6 +31,7 @@ namespace IN_lab1.Controllers
                 var claims = new List<Claim>();
 
                 claims.Add(new Claim(ClaimTypes.Name, username));
+                claims.Add(new Claim(ClaimTypes.Role, user.Role.Name));
 
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
 
@@ -51,7 +52,7 @@ namespace IN_lab1.Controllers
         }
 
         [HttpPost]
-        public IActionResult SignUp(string username, string password, string firstName, string lastName)
+        public IActionResult SignUp(string username, string password)
         {
             if(_userService.IsUserNameUsed(username))
             {
@@ -60,7 +61,7 @@ namespace IN_lab1.Controllers
             }
             else 
             {
-                _userService.AddUser(username, password, firstName, lastName);
+                _userService.AddUser(username, password);
                 return Login(username, password);
             }
         }

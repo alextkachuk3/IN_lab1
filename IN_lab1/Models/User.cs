@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime;
 
@@ -9,10 +10,11 @@ namespace IN_lab1.Models
     {
         public User() { }
 
-        public User(string username, string password)
+        public User(string username, string password, Role role)
         {
             Username = username;
             PasswordHash = password;
+            Role = role;
         }
 
         public bool CheckCredentials(string password)
@@ -28,5 +30,8 @@ namespace IN_lab1.Models
 
         [Required]
         public string? PasswordHash { get; set; }
+
+        [Required]
+        public Role Role { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using IN_lab1.Models;
 using IN_lab1.Services.UploadedFilesService;
 using IN_lab1.Services.UserService;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IN_lab1.Controllers
@@ -25,20 +27,21 @@ namespace IN_lab1.Controllers
 
             User? user = _userService.GetUser(User.Identity!.Name!);
 
-            if (user == null)
+            if (user is null)
             {
-                throw new InvalidOperationException("User not authorized!");
+                HttpContext.SignOutAsync();
+                return LocalRedirect("~/");
             }
 
             List<UploadedFile>? files = _uploadedFileService.GetUserFiles(user);
 
             return View(files);
-        }
+        }        
 
         public IActionResult GetFile(Guid id)
         {
             UploadedFile? file = _uploadedFileService.GetUploadedFile(id);
-            if(file is null)
+            if (file is null)
             {
                 throw new InvalidOperationException("File with id " + id + "not exists!");
             }

@@ -18,6 +18,11 @@ namespace IN_lab1.Services.UploadedFilesService
             throw new NotImplementedException();
         }
 
+        public List<UploadedFile>? GetAllFiles()
+        {
+            return _dbContext.UploadedFiles?.ToList();
+        }
+
         public UploadedFile? GetUploadedFile(Guid id)
         {
             return _dbContext.UploadedFiles?.Where(i => i.Id.Equals(id)).FirstOrDefault();

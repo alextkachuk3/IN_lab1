@@ -1,5 +1,6 @@
 ﻿using IN_lab1.Data;
 using IN_lab1.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace IN_lab1.Services.UserService
 {
@@ -12,11 +13,12 @@ namespace IN_lab1.Services.UserService
             _dbContext = dbContext;
         }
 
-        public void AddUser(string username, string password, string firstName, string lastName)
+        public void AddUser(string username, string password)
         {
+            Role? role = _dbContext.Roles.Where(i => i.Name.Equals("user")).FirstOrDefault();
             try
             {
-                _dbContext.Users?.Add(new User(username, password));
+                _dbContext.Users?.Add(new User(username, password, role));
             }
             catch
             {
@@ -30,7 +32,7 @@ namespace IN_lab1.Services.UserService
 
         public User? GetUser(string username)
         {
-            return _dbContext.Users?.FirstOrDefault(u => u.Username!.Equals(username));
+            return _dbContext.Users?.Include(i => i.Role).FirstOrDefault(u => u.Username!.Equals(username));
         }
 
         public bool IsUserNameUsed(string username)
