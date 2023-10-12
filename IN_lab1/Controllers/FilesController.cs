@@ -22,7 +22,17 @@ namespace IN_lab1.Controllers
             {
                 return LocalRedirect(Url.Action("Index", "Home")!);
             }
-            return View();
+
+            User? user = _userService.GetUser(User.Identity!.Name!);
+
+            if (user == null)
+            {
+                throw new InvalidOperationException("User not authorized!");
+            }
+
+            List<UploadedFile>? files = _uploadedFileService.GetUserFiles(user);
+
+            return View(files);
         }
 
         public IActionResult GetFile()

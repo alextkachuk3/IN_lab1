@@ -8,6 +8,6 @@ namespace IN_lab1.Services.UploadedFilesService
 
         public void DeleteFile(Guid id);
 
-        List<UploadedFile> GetUserFiles(int id);
+        List<UploadedFile>? GetUserFiles(User user);
     }
 }

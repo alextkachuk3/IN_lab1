@@ -18,9 +18,9 @@ namespace IN_lab1.Services.UploadedFilesService
             throw new NotImplementedException();
         }
 
-        public List<UploadedFile> GetUserFiles(int id)
+        public List<UploadedFile>? GetUserFiles(User user)
         {
-            throw new NotImplementedException();
+            return _dbContext.UploadedFiles?.Where(i => i.User == user).ToList();
         }
 
         public async Task UploadFileAsync(IFormFile file, User user)
@@ -44,7 +44,7 @@ namespace IN_lab1.Services.UploadedFilesService
 
                 try
                 {
-                    _dbContext.UploadedFiles?.Add(new UploadedFile(fileID, file.FileName, user));
+                    _dbContext.UploadedFiles?.Add(new UploadedFile(fileID, file.FileName, file.Length, user));
                 }
                 catch
                 {
