@@ -55,7 +55,7 @@ namespace IN_lab1.Controllers
         {
             if(_userService.IsUserNameUsed(username))
             {
-                ViewBag.AuthError = "Username already used!";
+                TempData["AuthError"] = "Username already used!";
                 return View();
             }
             else 

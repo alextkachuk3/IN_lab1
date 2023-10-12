@@ -34,22 +34,8 @@
                 <div class="text-end">
                     @if (user != null && user.IsAuthenticated)
                     {
-                        <b class="w-100">
-                            @user.Name
-                        </b>
-
-                        <a asp-area="" asp-controller="authorization" asp-action="logout" class="btn btn-outline-primary">
-                            Logout
-                        </a>
-                    }
-                    else
-                    {
-                        <a asp-area="" asp-controller="authorization" asp-action="login" class="btn btn-outline-primary">
-                            Login
-                        </a>
-                        <a asp-area=""  class="btn btn-primary">
-                            Sign up
-                        </a>
+                        <b class="w-100">@user.Name</b>
+                        <a asp-area="" asp-controller="authorization" asp-action="logout" class="btn btn-outline-primary">Logout</a>
                     }
                 </div>
             </div>

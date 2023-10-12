@@ -8,7 +8,7 @@
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
             <div class="form-floating">
                 <input name="username" type="text" class="form-control">
-                <label>Email address</label>
+                <label>Username</label>
             </div>
             <hr class="hr my-3" />
             <div class="form-floating">
@@ -19,13 +19,13 @@
             <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
         </form>
         <div class="row justify-content-center form-outline">
-            <div class="col-md-4 col-sm-12">
+            <div class="col-sm-12">
                 <p>@TempData["AuthError"]</p>
             </div>
         </div>
         <hr class="hr my-3" />
         <div class="text-center">
-            <a class="w-100 btn btn-lg btn-success" asp-area="" asp-controller="authorization" asp-action="signup">Create account</a>
+            <a class="w-100 btn btn-lg btn-success" asp-area="" asp-controller="Authorization" asp-action="Signup">Create account</a>
         </div>
     </div>
 
