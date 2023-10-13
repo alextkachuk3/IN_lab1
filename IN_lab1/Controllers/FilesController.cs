@@ -3,7 +3,10 @@ using IN_lab1.Services.UploadedFilesService;
 using IN_lab1.Services.UserService;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
+using static System.Collections.Specialized.BitVector32;
 
 namespace IN_lab1.Controllers
 {
@@ -56,16 +59,47 @@ namespace IN_lab1.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> IndexAsync(IFormFile file)
+        [DisableRequestSizeLimit]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> IndexAsync()
         {
             User? user = _userService.GetUser(User.Identity!.Name!);
 
-            if (user == null)
+            if (user is null)
             {
                 throw new InvalidOperationException("User not exist!");
             }
-            await _uploadedFileService.UploadFileAsync(file, user);
-            return LocalRedirect(Url.Action("Index", "Files")!);
+
+            var boundary = Request.GetMultipartBoundary();
+            var reader = new MultipartReader(boundary, HttpContext.Request.Body);
+            var section = await reader.ReadNextSectionAsync();
+            Guid id = Guid.NewGuid();
+
+            while (section != null)
+            {
+                var fileSection = section.AsFileSection();
+
+                if (fileSection != null)
+                {
+                    var fileName = fileSection.FileName;
+                    var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UploadedFiles", id.ToString());
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await fileSection.FileStream!.CopyToAsync(fileStream);
+                    }
+
+                    UploadedFile uploadedFile = new UploadedFile(id, fileName, new FileInfo(filePath).Length, user);
+
+                    _uploadedFileService.UploadFile(uploadedFile, user);
+
+                    return LocalRedirect(Url.Action("Index", "Files")!);
+                }
+
+                section = await reader.ReadNextSectionAsync();
+            }
+
+            return BadRequest("No file found in the request.");
         }
 
         [Authorize]
@@ -85,14 +119,14 @@ namespace IN_lab1.Controllers
             {
                 _uploadedFileService.DeleteFile(Guid.Parse(id), user);
             }
-            if(admin)
+            if (admin)
             {
                 return LocalRedirect(Url.Action("Index", "Admin")!);
             }
             else
             {
                 return LocalRedirect(Url.Action("Index", "Files")!);
-            }            
+            }
         }
     }
 }

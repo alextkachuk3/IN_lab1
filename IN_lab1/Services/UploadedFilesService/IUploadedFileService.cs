@@ -6,7 +6,7 @@ namespace IN_lab1.Services.UploadedFilesService
     {
         public UploadedFile? GetUploadedFile(Guid id);
 
-        public Task UploadFileAsync(IFormFile file, User user);
+        public void UploadFile(UploadedFile file, User user);
 
         public void DeleteFile(Guid id, User user);
 

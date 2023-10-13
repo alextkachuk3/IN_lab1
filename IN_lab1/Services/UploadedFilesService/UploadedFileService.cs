@@ -55,43 +55,21 @@ namespace IN_lab1.Services.UploadedFilesService
             return _dbContext.UploadedFiles?.Where(i => i.User!.Equals(user)).ToList();
         }
 
-        public async Task UploadFileAsync(IFormFile file, User user)
+        public void UploadFile(UploadedFile file, User user)
         {
-            if (file != null && file.Length > 0)
+            try
             {
-                var uploadsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UploadedFiles");
-
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-
-                Guid fileID = Guid.NewGuid();
-                var filePath = Path.Combine(uploadsFolder, fileID.ToString());
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(fileStream);
-                }
-
-                try
-                {
-                    _dbContext.UploadedFiles?.Add(new UploadedFile(fileID, file.FileName, file.Length, user));
-                }
-                catch
-                {
-                    throw;
-                }
-                finally
-                {
-                    _dbContext.SaveChanges();
-                }
-
+                _dbContext.UploadedFiles?.Add(new UploadedFile(file.Id, file.OriginalFileName!, file.FileSize, user));
             }
-            else
+            catch
             {
-                throw new InvalidDataException("Invalid file or empty content.");
+                throw;
             }
+            finally
+            {
+                _dbContext.SaveChanges();
+            }
+
         }
     }
 }
