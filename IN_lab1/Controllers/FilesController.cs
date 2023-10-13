@@ -70,11 +70,18 @@ namespace IN_lab1.Controllers
         [HttpPost]
         public IActionResult DeleteFiles(List<string>? filesIds)
         {
+            User? user = _userService.GetUser(User.Identity!.Name!);
+
+            if (user == null)
+            {
+                throw new InvalidOperationException("User not exist!");
+            }
+
             if (filesIds == null)
                 return LocalRedirect(Url.Action("Index", "Files")!);
             foreach (var id in filesIds)
             {
-                _uploadedFileService.DeleteFile(Guid.Parse(id), HttpContext.User!.Identity!.Name!);
+                _uploadedFileService.DeleteFile(Guid.Parse(id), user);
             }
             return LocalRedirect(Url.Action("Index", "Files")!);
         }

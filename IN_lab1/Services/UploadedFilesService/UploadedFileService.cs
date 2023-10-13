@@ -1,6 +1,6 @@
 ﻿using IN_lab1.Data;
 using IN_lab1.Models;
-using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace IN_lab1.Services.UploadedFilesService
 {
@@ -13,9 +13,31 @@ namespace IN_lab1.Services.UploadedFilesService
             _dbContext = dbContext;
         }
 
-        public void DeleteFile(Guid id, string username)
+        public void DeleteFile(Guid id, User user)
         {
-            throw new NotImplementedException();
+            UploadedFile? file = _dbContext.UploadedFiles!.Where(i => i.Id.Equals(id)).Include(i => i.User).FirstOrDefault();
+            if (file is not null)
+            {
+                if (file.User!.Equals(user) || user.Role!.Name!.Equals("admin"))
+                {
+                    try
+                    {
+                        _dbContext.UploadedFiles!.Remove(file);
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                    finally
+                    {
+                        _dbContext.SaveChanges();
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("User tried to delete a file that doesn't own!");
+                }
+            }
         }
 
         public List<UploadedFile>? GetAllFiles()

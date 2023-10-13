@@ -59,7 +59,7 @@
                         {
                             <tr class="paginate-show">
                                 <td class="col-1">
-                                    <input name="vacationsIds" class="form-check-input" type="checkbox" value="@file.Id" id="vacancyIdInput- + @file.Id">
+                                    <input name="filesIds" class="form-check-input" type="checkbox" value="@file.Id" id="vacancyIdInput- + @file.Id">
                                 </td>
                                 <td class="col-8">
                                     <a asp-controller="Files" asp-action="GetFile" asp-route-id="@file.Id.ToString()">@file.OriginalFileName</a>

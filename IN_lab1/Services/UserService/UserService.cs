@@ -15,10 +15,10 @@ namespace IN_lab1.Services.UserService
 
         public void AddUser(string username, string password)
         {
-            Role? role = _dbContext.Roles.Where(i => i.Name.Equals("user")).FirstOrDefault();
+            Role? role = _dbContext.Roles!.Where(i => i.Name!.Equals("user")).FirstOrDefault();
             try
             {
-                _dbContext.Users?.Add(new User(username, password, role));
+                _dbContext.Users?.Add(new User(username, password, role!));
             }
             catch
             {
