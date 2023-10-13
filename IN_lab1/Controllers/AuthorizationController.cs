@@ -28,10 +28,11 @@ namespace IN_lab1.Controllers
             }
             else if(user.CheckCredentials(password))
             {
-                var claims = new List<Claim>();
-
-                claims.Add(new Claim(ClaimTypes.Name, username));
-                claims.Add(new Claim(ClaimTypes.Role, user!.Role!.Name!));
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, username),
+                    new Claim(ClaimTypes.Role, user!.Role!.Name!)
+                };
 
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
 
