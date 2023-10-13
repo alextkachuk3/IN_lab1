@@ -32,6 +32,6 @@ namespace IN_lab1.Models
         public string? PasswordHash { get; set; }
 
         [Required]
-        public Role Role { get; set; }
+        public Role? Role { get; set; }
     }
 }

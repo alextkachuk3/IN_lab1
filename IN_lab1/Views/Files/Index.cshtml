@@ -28,7 +28,11 @@
             <input type="file" name="file" id="file" class="form-control" required />
         </div>
         <hr class="hr my-3" />
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <div class="row">
+            <div class="col-2">
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Upload</button>
+            </div>
+        </div>
     </form>
 
     <hr class="hr my-3" />
@@ -39,22 +43,43 @@
     }
     else
     {
-        <div class="panel">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Filename</th>
-                        <th>Upload time</th>
-                        <th>Size</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var file in uploadedFiles)
-                    {
-                        <tr class="paginate-show"><td><a asp-controller="Files" asp-action="GetFile" asp-route-id="@file.Id.ToString()">@file.OriginalFileName</a></td><td>@file.UploadDate.ToString()</td><td>@ConvertBytesSizeToString(file.FileSize)</td></tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+        <form method="post" asp-controller="Files" asp-action="DeleteFiles">
+            <div class="panel">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-1"></th>
+                            <th class="col-7">Filename</th>
+                            <th class="col-2">Upload time</th>
+                            <th class="col-2">Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var file in uploadedFiles)
+                        {
+                            <tr class="paginate-show">
+                                <td class="col-1">
+                                    <input name="vacationsIds" class="form-check-input" type="checkbox" value="@file.Id" id="vacancyIdInput- + @file.Id">
+                                </td>
+                                <td class="col-8">
+                                    <a asp-controller="Files" asp-action="GetFile" asp-route-id="@file.Id.ToString()">@file.OriginalFileName</a>
+                                </td>
+                                <td class="col-2">
+                                    @file.UploadDate.ToString()
+                                </td>
+                                <td class="col-1">
+                                    @ConvertBytesSizeToString(file.FileSize)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <button class="w-100 btn btn-lg btn-danger" type="submit">Delete selected</button>
+                </div>
+            </div>
+        </form>
     }
 </div>

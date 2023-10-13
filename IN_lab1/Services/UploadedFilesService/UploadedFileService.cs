@@ -13,7 +13,7 @@ namespace IN_lab1.Services.UploadedFilesService
             _dbContext = dbContext;
         }
 
-        public void DeleteFile(Guid id)
+        public void DeleteFile(Guid id, string username)
         {
             throw new NotImplementedException();
         }

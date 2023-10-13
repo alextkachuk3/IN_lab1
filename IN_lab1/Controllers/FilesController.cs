@@ -36,7 +36,7 @@ namespace IN_lab1.Controllers
             List<UploadedFile>? files = _uploadedFileService.GetUserFiles(user);
 
             return View(files);
-        }        
+        }
 
         public IActionResult GetFile(Guid id)
         {
@@ -52,6 +52,7 @@ namespace IN_lab1.Controllers
             return PhysicalFile(filePath, fileType, file.OriginalFileName!);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> IndexAsync(IFormFile file)
         {
@@ -59,9 +60,22 @@ namespace IN_lab1.Controllers
 
             if (user == null)
             {
-                throw new InvalidOperationException("User not authorized!");
+                throw new InvalidOperationException("User not exist!");
             }
             await _uploadedFileService.UploadFileAsync(file, user);
+            return LocalRedirect(Url.Action("Index", "Files")!);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult DeleteFiles(List<string>? filesIds)
+        {
+            if (filesIds == null)
+                return LocalRedirect(Url.Action("Index", "Files")!);
+            foreach (var id in filesIds)
+            {
+                _uploadedFileService.DeleteFile(Guid.Parse(id), HttpContext.User!.Identity!.Name!);
+            }
             return LocalRedirect(Url.Action("Index", "Files")!);
         }
     }
