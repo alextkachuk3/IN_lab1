@@ -31,6 +31,7 @@ namespace IN_lab1.Services.UploadedFilesService
                     finally
                     {
                         _dbContext.SaveChanges();
+                        File.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UploadedFiles", id.ToString()));
                     }
                 }
                 else
