@@ -68,7 +68,7 @@ namespace IN_lab1.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult DeleteFiles(List<string>? filesIds)
+        public IActionResult DeleteFiles(List<string>? filesIds, bool admin = false)
         {
             User? user = _userService.GetUser(User.Identity!.Name!);
 
@@ -83,7 +83,14 @@ namespace IN_lab1.Controllers
             {
                 _uploadedFileService.DeleteFile(Guid.Parse(id), user);
             }
-            return LocalRedirect(Url.Action("Index", "Files")!);
+            if(admin)
+            {
+                return LocalRedirect(Url.Action("Index", "Admin")!);
+            }
+            else
+            {
+                return LocalRedirect(Url.Action("Index", "Files")!);
+            }            
         }
     }
 }
