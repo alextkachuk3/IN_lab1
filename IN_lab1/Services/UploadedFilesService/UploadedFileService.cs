@@ -43,7 +43,7 @@ namespace IN_lab1.Services.UploadedFilesService
 
         public List<UploadedFile>? GetAllFiles()
         {
-            return _dbContext.UploadedFiles?.ToList();
+            return _dbContext.UploadedFiles?.Include(i => i.User).ToList();
         }
 
         public UploadedFile? GetUploadedFile(Guid id)
