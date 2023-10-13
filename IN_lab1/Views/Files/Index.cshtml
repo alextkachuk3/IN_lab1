@@ -45,9 +45,9 @@
     else
     {
         <form method="post" asp-controller="Files" asp-action="DeleteFiles">
-            @if (User is not null)
+            @if (TempData["Role"] is not null)
             {
-                if (((ClaimsIdentity)User.Identity!).FindAll(ClaimTypes.Role).Select(c => c.Value).Contains("admin"))
+                if (TempData["Role"]!.Equals("admin"))
                 {
                     <input name="admin" type="hidden" value="true" id="adminRoleInput">
                 }

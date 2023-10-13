@@ -35,6 +35,8 @@ namespace IN_lab1.Controllers
 
             List<UploadedFile>? files = _uploadedFileService.GetUserFiles(user);
 
+            TempData["Role"] = "user";
+
             return View(files);
         }
 

@@ -20,6 +20,8 @@ namespace IN_lab1.Controllers
         {
             List<UploadedFile>? files = _uploadedFileService.GetAllFiles();
 
+            TempData["Role"] = "admin";
+
             return View("../Files/Index", files);
         }
     }
