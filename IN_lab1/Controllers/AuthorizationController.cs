@@ -31,7 +31,7 @@ namespace IN_lab1.Controllers
                 var claims = new List<Claim>();
 
                 claims.Add(new Claim(ClaimTypes.Name, username));
-                claims.Add(new Claim(ClaimTypes.Role, user.Role.Name));
+                claims.Add(new Claim(ClaimTypes.Role, user!.Role!.Name!));
 
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
 

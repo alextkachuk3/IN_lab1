@@ -2,6 +2,11 @@
 @{
     List<UploadedFile>? uploadedFiles = Model;
 
+    if (uploadedFiles is not null)
+    {
+        uploadedFiles.Sort((file1, file2) => file2.UploadDate.CompareTo(file1.UploadDate));
+    }
+
     string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB" };
 
     string ConvertBytesSizeToString(long value)
@@ -38,10 +43,11 @@
 
     <hr class="hr my-3" />
 
-    @if (uploadedFiles.Count == 0)
+    @if (uploadedFiles!.Count == 0)
     {
         <p>You haven't uploaded any file. It's good opportunity to upload first one :)</p>
     }
+
     else
     {
         <form method="post" asp-controller="Files" asp-action="DeleteFiles">
