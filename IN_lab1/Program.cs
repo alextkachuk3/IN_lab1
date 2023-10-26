@@ -35,6 +35,16 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.Use(async (context, next) =>
+{
+    await next();
+
+    if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
+    {
+        context.Response.Redirect("/"); // Redirect to home page
+    }
+});
+
 app.UseAuthorization();
 
 app.MapControllerRoute(

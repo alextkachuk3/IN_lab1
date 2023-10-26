@@ -17,10 +17,14 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Easy Web Drive</a>
-                
+
+                @if (user is not null && user.IsAuthenticated)
+                {
+                    
+                }
 
                 <div class="text-end">
-                    @if (user != null && user.IsAuthenticated)
+                    @if (user is not null && user.IsAuthenticated)
                     {
                         <b class="w-100">@user.Name</b>
                         <a asp-area="" asp-controller="Authorization" asp-action="Logout" class="btn btn-outline-primary">Logout</a>
