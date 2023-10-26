@@ -19,4 +19,8 @@
     <Folder Include="UserFiles\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\user-form-script.js" />
+  </ItemGroup>
+
 </Project>

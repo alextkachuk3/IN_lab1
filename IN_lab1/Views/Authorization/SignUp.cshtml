@@ -1,18 +1,7 @@
 ﻿<div class="row justify-content-center align-items-center h-100">
     <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
-        <form method="post" enctype="multipart/form-data">
-            <h1 class="h3 mb-3 fw-normal">Registration</h1>
-            <div class="form-floating">
-                <input id="usernameinput" name="username" type="text" class="form-control" maxlength="30" required>
-                <label>Username</label>
-            </div>
-            <hr class="hr my-3" />
-            <div class="form-floating">
-                <input name="password" type="password" class="form-control" placeholder="Password" required>
-                <label>Password</label>
-            </div>
-            <hr class="hr my-3" />
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+        <form method="post">
+            <partial name="~/Views/Shared/_UserForm.cshtml" />
         </form>
         <div class="row justify-content-center form-outline">
             <div class="col-sm-12">
@@ -27,15 +16,5 @@
 </div>
 
 @section Scripts {
-    <script>
-        $('#usernameinput').keypress(function (e) {
-            var regex = new RegExp("^[a-zA-Z0-9_]+$");
-            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-            if (regex.test(str)) {
-                return true;
-            }
-            e.preventDefault();
-            return false;
-        });
-    </script>
+    <script src="~/js/user-form-script.js"></script>
 }
