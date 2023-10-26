@@ -35,7 +35,7 @@
         </div>
         <hr class="hr my-3" />
         <div class="row">
-            <div class="col-sm-12 col-md-2">
+            <div class="col-12 col-lg-3">
                 <button class="w-100 btn btn-lg btn-primary" type="submit">Upload</button>
             </div>
         </div>
@@ -84,7 +84,7 @@
                                     {
                                         if (TempData["Role"]!.Equals("admin"))
                                         {
-                                            @file.User!.Username;
+                                            @file.User!.Username
                                         }
                                     }
                                 </td>
@@ -100,10 +100,29 @@
                 </table>
             </div>
             <div class="row">
-                <div class="col-sm-12 col-md-2">
-                    <button class="w-100 btn btn-lg btn-danger" type="submit">Delete selected</button>
+                <div class="col-12 col-lg-3">
+                    <button type="button" class="w-100 btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#submitModal">Delete selected</button>
                 </div>
             </div>
+
+            <div class="modal fade" id="submitModal" tabindex="-1" aria-labelledby="submitModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="submitModalLabel">Confirm action</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Selected files will be deleted and not will be able to restore.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger">Delete files</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </form>
     }
 </div>
