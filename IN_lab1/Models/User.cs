@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace IN_lab1.Models
 {
@@ -29,7 +31,7 @@ namespace IN_lab1.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(maximumLength: 100, MinimumLength = 4)]
+        [MaxLength(30)]
         public string? Username { get; set; }
 
         [Required]
@@ -43,6 +45,13 @@ namespace IN_lab1.Models
         [Required]
         public Role? Role { get; set; }
 
+        private static Regex regex = new Regex("^[a-zA-Z0-9]*$");
+
+        public static bool IsAlphanumeric(string input)
+        {
+            return regex.IsMatch(input);
+        }
+
         private byte[] GenerateSalt()
         {
             byte[] salt = new byte[16];
@@ -52,7 +61,6 @@ namespace IN_lab1.Models
             }
             return salt;
         }
-
         private byte[] HashPassword(string password, byte[] salt)
         {
             byte[] hashedPassword = KeyDerivation.Pbkdf2(

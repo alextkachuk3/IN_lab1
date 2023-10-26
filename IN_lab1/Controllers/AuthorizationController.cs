@@ -21,7 +21,15 @@ namespace IN_lab1.Controllers
         {
             User? user = _userService.GetUser(username);
 
-            if(user == null)
+            var check_credentials = CheckCredentials(username, password);
+
+            if(check_credentials is not null)
+            {
+                TempData["AuthError"] = check_credentials;
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (user == null)
             {
                 TempData["AuthError"] = "User with this username not exists!";
                 return RedirectToAction("Index", "Home");
@@ -55,7 +63,15 @@ namespace IN_lab1.Controllers
         [HttpPost]
         public IActionResult SignUp(string username, string password)
         {
-            if(_userService.IsUserNameUsed(username))
+            var check_credentials = CheckCredentials(username, password);
+
+            if (check_credentials is not null)
+            {
+                TempData["AuthError"] = check_credentials;
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (_userService.IsUserNameUsed(username))
             {
                 TempData["AuthError"] = "Username already used!";
                 return View();
@@ -70,6 +86,31 @@ namespace IN_lab1.Controllers
         {
             HttpContext.SignOutAsync();
             return LocalRedirect("~/");
+        }
+
+        private String? CheckCredentials(string username, string password)
+        {
+            if (username.Length > 30)
+            {
+                return "Length of username is bigger than max!";
+            }
+
+            if (username.Length < 5)
+            {
+                return "Minimal username lenght is 5!";
+            }
+
+            if (!Models.User.IsAlphanumeric(username))
+            {
+                return "Username contains special chars!";
+            }
+
+            if (!Models.User.IsAlphanumeric(password))
+            {
+                return "Username contains special chars!";
+            }
+
+            return null;
         }
     }
 }
