@@ -26,7 +26,7 @@ namespace IN_lab1.Controllers
                 TempData["AuthError"] = "User with this username not exists!";
                 return RedirectToAction("Index", "Home");
             }
-            else if(user.CheckCredentials(password))
+            else if(user.CheckCredentials(password, user.Salt!))
             {
                 var claims = new List<Claim>
                 {
