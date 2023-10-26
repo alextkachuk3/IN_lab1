@@ -2,6 +2,7 @@
     <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
         <form method="post">
             <partial name="~/Views/Shared/_UserForm.cshtml" />
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
         </form>
         <div class="row justify-content-center form-outline">
             <div class="col-sm-12">
@@ -10,7 +11,7 @@
         </div>
         <hr class="hr my-3" />
         <div class="text-center">
-            <a class="w-100 btn btn-lg btn-success" asp-area="" asp-controller="Home" asp-action="Index">Login</a>
+            Already registered? <a asp-area="" asp-controller="Home" asp-action="Index">Log In</a>
         </div>
     </div>
 </div>
