@@ -41,7 +41,7 @@ app.Use(async (context, next) =>
 
     if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
     {
-        context.Response.Redirect("/"); // Redirect to home page
+        context.Response.Redirect("/");
     }
 });
 

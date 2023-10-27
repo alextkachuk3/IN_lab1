@@ -9,38 +9,37 @@
     <link rel="stylesheet" href="~/IN_lab1.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Easy Web Drive</a>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark md-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Easy Web Drive</a>
 
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        @if (User.IsInRole("admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin page</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-                
-
-                <div class="text-end">
-                    @if (User.Identity is not null && User.Identity.IsAuthenticated)
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    @if (User.IsInRole("admin"))
                     {
-                        <b class="w-100">@User.Identity.Name</b>
-                        <a onclick="IncreaseReloadCounter()" asp-area="" asp-controller="Authorization" asp-action="Logout" class="btn btn-outline-primary">Logout</a>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index">Admin page</a>
+                        </li>
                     }
-                </div>
+                </ul>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+
+
+            <div class="text-end">
+                @if (User.Identity is not null && User.Identity.IsAuthenticated)
+                {
+                    <b class="w-100 text-light">@User.Identity.Name</b>
+                    <a onclick="IncreaseReloadCounter()" asp-area="" asp-controller="Authorization" asp-action="Logout" class="btn btn-outline-primary">Logout</a>
+                }
+            </div>
+        </div>
+    </nav>
+    <hr />
+    <hr />
+    <hr />
+    <main class="container" role="main">
+        @RenderBody()
+    </main>
 
     <footer class="border-top footer text-muted">
         <div class="container">

@@ -1,5 +1,6 @@
 ﻿function IncreaseReloadCounter() {
     localStorage.setItem('ReloadIteration', Number(localStorage.getItem('ReloadIteration')) + 1)
+    sessionStorage.setItem('ReloadIteration', Number(sessionStorage.getItem('ReloadIteration')) + 1)
 }
 
 let reload_iteration = localStorage.getItem('ReloadIteration')

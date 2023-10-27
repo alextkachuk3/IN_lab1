@@ -88,8 +88,18 @@ namespace IN_lab1.Controllers
             return LocalRedirect("~/");
         }
 
-        private String? CheckCredentials(string username, string password)
+        private string? CheckCredentials(string username, string password)
         {
+            if (username is null)
+            {
+                return "Username is empty";
+            }
+
+            if (password is null)
+            {
+                return "Password is empty";
+            }
+
             if (username.Length > 30)
             {
                 return "Length of username is bigger than max!";
