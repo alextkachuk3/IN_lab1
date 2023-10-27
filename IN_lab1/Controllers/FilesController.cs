@@ -36,9 +36,6 @@ namespace IN_lab1.Controllers
             }
 
             List<UploadedFile>? files = _uploadedFileService.GetUserFiles(user);
-
-            TempData["Role"] = "user";
-
             return View(files);
         }
 
@@ -114,10 +111,22 @@ namespace IN_lab1.Controllers
 
             if (filesIds == null)
                 return LocalRedirect(Url.Action("Index", "Files")!);
-            foreach (var id in filesIds)
+
+            if (admin)
             {
-                _uploadedFileService.DeleteFile(Guid.Parse(id), user);
+                foreach (var id in filesIds)
+                {
+                    _uploadedFileService.AdminDeleteFile(Guid.Parse(id), user);
+                }
             }
+            else
+            {
+                foreach (var id in filesIds)
+                {
+                    _uploadedFileService.DeleteFile(Guid.Parse(id), user);
+                }
+            }
+            
             if (admin)
             {
                 return LocalRedirect(Url.Action("Index", "Admin")!);

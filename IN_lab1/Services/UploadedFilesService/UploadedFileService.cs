@@ -13,6 +13,16 @@ namespace IN_lab1.Services.UploadedFilesService
             _dbContext = dbContext;
         }
 
+        public void AdminDeleteFile(Guid id, User user)
+        {
+            if (!user.Role!.Name!.Equals("admin")) 
+            {
+                throw new InvalidOperationException("User trying to delete files as admin!");
+            }
+
+            DeleteFile(id, user);
+        }
+
         public void DeleteFile(Guid id, User user)
         {
             UploadedFile? file = _dbContext.UploadedFiles!.Where(i => i.Id.Equals(id)).Include(i => i.User).FirstOrDefault();

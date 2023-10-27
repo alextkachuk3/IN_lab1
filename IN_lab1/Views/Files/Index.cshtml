@@ -51,12 +51,9 @@
     else
     {
         <form method="post" asp-controller="Files" asp-action="DeleteFiles">
-            @if (TempData["Role"] is not null)
+            @if (User.IsInRole("admin"))
             {
-                if (TempData["Role"]!.Equals("admin"))
-                {
-                    <input name="admin" type="hidden" value="true" id="adminRoleInput">
-                }
+                <input name="admin" type="hidden" value="true" id="adminRoleInput">
             }
             <div class="panel">
                 <table class="table table-striped table-hover">
@@ -80,12 +77,9 @@
                                     <a asp-controller="Files" asp-action="GetFile" asp-route-id="@file.Id.ToString()">@file.OriginalFileName</a>
                                 </td>
                                 <td class="col-1">
-                                    @if (TempData["Role"] is not null)
+                                    @if (User.IsInRole("admin"))
                                     {
-                                        if (TempData["Role"]!.Equals("admin"))
-                                        {
-                                            @file.User!.Username
-                                        }
+                                        @file.User!.Username
                                     }
                                 </td>
                                 <td class="col-2">

@@ -19,9 +19,6 @@ namespace IN_lab1.Controllers
         public IActionResult Index()
         {
             List<UploadedFile>? files = _uploadedFileService.GetAllFiles();
-
-            TempData["Role"] = "admin";
-
             return View("../Files/Index", files);
         }
     }

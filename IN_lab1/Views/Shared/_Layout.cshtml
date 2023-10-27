@@ -1,8 +1,4 @@
-﻿@{
-    var user = User.Identity;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,9 +27,9 @@
                 
 
                 <div class="text-end">
-                    @if (user is not null && user.IsAuthenticated)
+                    @if (User.Identity is not null && User.Identity.IsAuthenticated)
                     {
-                        <b class="w-100">@user.Name</b>
+                        <b class="w-100">@User.Identity.Name</b>
                         <a onclick="IncreaseReloadCounter()" asp-area="" asp-controller="Authorization" asp-action="Logout" class="btn btn-outline-primary">Logout</a>
                     }
                 </div>
